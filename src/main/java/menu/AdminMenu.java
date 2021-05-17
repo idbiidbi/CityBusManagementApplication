@@ -1,5 +1,6 @@
 package menu;
 import controller.BusTerminal;
+import database.BusRepository;
 import entity.Bus;
 
 import java.util.Scanner;
@@ -29,13 +30,13 @@ public class AdminMenu {
                     addBus();
                     break;
                 case "2":
-                    //updateBus();
+                    updateBus();
                     break;
                 case "3":
-                    //removeBus();
+                    removeBus();
                     break;
                 case "4":
-                    busList();
+                    viewAllBuses();
                     break;
                 case "5":
                     // addDriver();
@@ -73,24 +74,58 @@ public class AdminMenu {
     }
 
     void addBus(){
+
         Bus newBus = new Bus();
-        System.out.println("CREATE A NEW BUS");
+
+        System.out.println("\nCREATE A NEW BUS");
 
         System.out.print("Enter bus number: ");
         newBus.setBusNumber(Integer.parseInt(input.nextLine()));
 
-        System.out.print("Enter bus route: ");
-        newBus.setRoute(input.nextLine());
+        System.out.print("Enter bus first stop: ");
+        newBus.setFirstStop(input.nextLine());
+
+        System.out.print("Enter bus last stop: ");
+        newBus.setLastStop(input.nextLine());
 
         System.out.println(busTerminal.addBus(newBus));
+    }
+
+    void updateBus(){
+        this.viewAllBuses();
+
+        System.out.println("\nUPDATE BUS");
+
+        System.out.print("Enter bus id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Bus bus = busTerminal.getBusById(id);
+
+        System.out.print("Update new bus first stop: ");
+        bus.setFirstStop(input.nextLine());
+
+        System.out.print("Update new bus last stop: ");
+        bus.setLastStop(input.nextLine());
+
+        System.out.println(busTerminal.updateBus(bus));
 
     }
 
-    void busList() {
-        System.out.println("BUS LIST");
+    void removeBus(){
 
-        for (var bus:
-                busTerminal.getBusList()) {
+        System.out.println("DELETE BUS");
+        System.out.print("Enter bus id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Bus bus = busTerminal.getBusById(id);
+        System.out.println(busTerminal.deleteBus(id));
+
+    }
+
+    void viewAllBuses() {
+        System.out.println("\nBUS LIST");
+
+        for (var bus: busTerminal.getBusList()) {
             System.out.println(bus);
         }
     }

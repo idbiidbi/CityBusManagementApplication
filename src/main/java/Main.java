@@ -1,5 +1,6 @@
 import entity.Admin;
 import menu.AdminMenu;
+import menu.UserMenu;
 
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class Main {
     Scanner input = new Scanner(System.in);
     static AdminMenu adminMenu = new AdminMenu();
     Admin admin = new Admin();
+    UserMenu userMenu = new UserMenu();
 
     public static void main(String[] args) {
 
@@ -36,7 +38,7 @@ public class Main {
                         return;
                     }
                 case "2":
-                    // signInAsUser();
+                    signInAsUser();
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
@@ -71,6 +73,10 @@ public class Main {
             System.out.println("Incorrect name, please try again.");
             continue;
         } while (true);
+    }
+
+    void signInAsUser(){
+        userMenu.showUserMenu();
     }
 }
 

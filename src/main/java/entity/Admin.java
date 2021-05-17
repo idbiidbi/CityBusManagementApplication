@@ -9,12 +9,12 @@ public class Admin {
     }
 
     public String getName() {
-        name = "ADMIN";
+        name = "A";
         return name;
     }
 
     public String getPassword() {
-        password = "123456";
+        password = "a";
         return password;
     }
 }
