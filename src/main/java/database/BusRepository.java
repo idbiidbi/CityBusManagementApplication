@@ -28,7 +28,7 @@ public class BusRepository {
     }
 
     public List<Bus> getAll() {
-        List<Bus> busList = new ArrayList<>();
+        List<Bus> busesList = new ArrayList<>();
         Connection connection = dbHandler.getConnection();
         String query = "SELECT * from buses";
 
@@ -37,12 +37,12 @@ public class BusRepository {
             ResultSet resultSet = prepareStatement.executeQuery();
 
             while (resultSet.next()) {
-                busList.add(Bus.create(resultSet));
+                busesList.add(Bus.create(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return busList;
+        return busesList;
     }
 
     public Bus getByNumber(int busNumber) {

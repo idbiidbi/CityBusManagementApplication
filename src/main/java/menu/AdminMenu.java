@@ -1,7 +1,8 @@
 package menu;
 import controller.BusTerminal;
-import database.BusRepository;
 import entity.Bus;
+import entity.Driver;
+import entity.Stop;
 
 import java.util.Scanner;
 
@@ -39,28 +40,28 @@ public class AdminMenu {
                     viewAllBuses();
                     break;
                 case "5":
-                    // addDriver();
+                    addDriver();
                     break;
                 case "6":
-                    //updateDriver();
+                    updateDriver();
                     break;
                 case "7":
-                    // removeDriver();
+                    removeDriver();
                     break;
                 case "8":
-                    // viewAllDrivers();
+                    viewAllDrivers();
                     break;
                 case "9":
-                    // addBusStop();
+                    addBusStop();
                     break;
                 case "10":
-                    //updateBusStop();
+                    updateBusStop();
                     break;
                 case "11":
-                    // removeBusStop();
+                    removeBusStop();
                     break;
                 case "12":
-                    //viewAllBusStops();
+                    viewAllBusStops();
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
@@ -101,10 +102,10 @@ public class AdminMenu {
 
         Bus bus = busTerminal.getBusById(id);
 
-        System.out.print("Update new bus first stop: ");
+        System.out.print("Update bus new first stop: ");
         bus.setFirstStop(input.nextLine());
 
-        System.out.print("Update new bus last stop: ");
+        System.out.print("Update bus new last stop: ");
         bus.setLastStop(input.nextLine());
 
         System.out.println(busTerminal.updateBus(bus));
@@ -126,8 +127,113 @@ public class AdminMenu {
     void viewAllBuses() {
         System.out.println("\nBUS LIST");
 
-        for (var bus: busTerminal.getBusList()) {
+        for (var bus: busTerminal.getBusesList()) {
             System.out.println(bus);
+        }
+    }
+
+
+    void addDriver(){
+
+        Driver newDriver = new Driver();
+
+        System.out.println("\nCREATE A NEW DRIVER");
+
+        System.out.print("Enter driver name: ");
+        newDriver.setName(input.nextLine());
+
+        System.out.print("Enter driver last name: ");
+        newDriver.setLastName(input.nextLine());
+
+        System.out.println(busTerminal.addDriver(newDriver));
+    }
+
+    void updateDriver(){
+        this.viewAllDrivers();
+
+        System.out.println("\nUPDATE DRIVER");
+
+        System.out.print("Enter driver id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Driver driver = busTerminal.getDriverById(id);
+
+        System.out.print("Update driver new name: ");
+        driver.setName(input.nextLine());
+
+        System.out.print("Update driver last name: ");
+        driver.setLastName(input.nextLine());
+
+        System.out.println(busTerminal.updateDriver(driver));
+
+    }
+
+    void removeDriver(){
+        this.viewAllDrivers();
+
+        System.out.println("\nDELETE DRIVER");
+        System.out.print("Enter driver id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Driver driver = busTerminal.getDriverById(id);
+        System.out.println(busTerminal.deleteDriver(id));
+
+    }
+
+    void viewAllDrivers() {
+        System.out.println("\nDRIVER LIST");
+
+        for (var driver: busTerminal.getDriversList()) {
+            System.out.println(driver);
+        }
+    }
+
+
+    void addBusStop(){
+
+        Stop newStop = new Stop();
+
+        System.out.println("\nCREATE A NEW STOP");
+
+        System.out.print("Enter stop name: ");
+        newStop.setBusStopName(input.nextLine());
+
+        System.out.println(busTerminal.addStop(newStop));
+    }
+
+    void updateBusStop(){
+        this.viewAllBusStops();
+
+        System.out.println("\nUPDATE STOP");
+
+        System.out.print("Enter stop id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Stop stop = busTerminal.getStopById(id);
+
+        System.out.print("Update stop new name: ");
+        stop.setBusStopName(input.nextLine());
+
+        System.out.println(busTerminal.updateStop(stop));
+    }
+
+    void removeBusStop(){
+        this.viewAllBusStops();
+
+        System.out.println("\nDELETE STOP");
+        System.out.print("Enter stop id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Stop stop = busTerminal.getStopById(id);
+        System.out.println(busTerminal.deleteStop(id));
+
+    }
+
+    void viewAllBusStops() {
+        System.out.println("\nSTOPS LIST");
+
+        for (var stop: busTerminal.getStopsList()) {
+            System.out.println(stop);
         }
     }
 }

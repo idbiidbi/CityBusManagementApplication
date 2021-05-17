@@ -43,7 +43,7 @@ public class UserMenu {
     void viewAllBuses() {
         System.out.println("\nBUS LIST");
 
-        for (var bus: busTerminal.getBusList()) {
+        for (var bus: busTerminal.getBusesList()) {
             System.out.println(bus);
         }
     }

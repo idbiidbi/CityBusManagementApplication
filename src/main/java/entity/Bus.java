@@ -50,7 +50,7 @@ public class Bus {
         this.lastStop = lastStop;
     }
 
-    public String Route(){
+    public String route(){
         String route = getFirstStop() + " - " + getLastStop();
 
         return route;
@@ -71,6 +71,6 @@ public class Bus {
 
     @Override
     public String toString() {
-        return id + ". Bus Number: " + busNumber + ", Route: " + Route();
+        return getId() + ". Bus Number: " + getBusNumber() + ", Route: " + route();
     }
 }
