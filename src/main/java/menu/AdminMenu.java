@@ -32,9 +32,9 @@ public class AdminMenu {
                 case "2":
                     updateBus();
                     break;
-                case "3":
-                    //removeBus();
-                    break;
+//                case "3":
+//                    removeBus();
+//                    break;
                 case "4":
                     viewAllBuses();
                     break;
