@@ -63,15 +63,15 @@ public class BusTerminal {
 
     }
 
-//    public String deleteBus(int id){
-//        try{
-//            busRepository.delete(id);
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//            return "error with deleting bus";
-//        }
-//        return "Bus number " + bus.getBusNumber() + " deleting successfully";
-//    }
+    public String deleteBus(int id){
+        try{
+            busRepository.delete(id);
+        }catch (SQLException e){
+            e.printStackTrace();
+            return "error with deleting bus";
+        }
+        return "Bus deleting successfully";
+    }
 
     public Bus getBusById(int id) {
         return busRepository.getById(id);

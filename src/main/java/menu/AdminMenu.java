@@ -32,9 +32,9 @@ public class AdminMenu {
                 case "2":
                     updateBus();
                     break;
-//                case "3":
-//                    removeBus();
-//                    break;
+                case "3":
+                    removeBus();
+                    break;
                 case "4":
                     viewAllBuses();
                     break;
@@ -111,16 +111,17 @@ public class AdminMenu {
 
     }
 
-//    void removeBus(){
-//
-//        System.out.println("DELETE BUS");
-//        System.out.print("Enter bus id: ");
-//        int id = Integer.parseInt(input.nextLine());
-//
-//        Bus bus = busTerminal.getBusById(id);
-//        System.out.println(busTerminal.deleteBus(id));
-//
-//    }
+    void removeBus(){
+        this.viewAllBuses();
+
+        System.out.println("\nDELETE BUS");
+        System.out.print("Enter bus id: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        Bus bus = busTerminal.getBusById(id);
+        System.out.println(busTerminal.deleteBus(id));
+
+    }
 
     void viewAllBuses() {
         System.out.println("\nBUS LIST");
