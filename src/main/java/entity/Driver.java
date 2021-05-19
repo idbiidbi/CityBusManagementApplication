@@ -48,6 +48,10 @@ public class Driver {
         return id + ". Driver: " + fullName();
     }
 
+    public String getInfo(){
+        return name.substring(0,1) + ". " + lastName;
+    }
+
     public static Driver create(ResultSet row) {
         try {
             return new Driver(row.getInt("id"),

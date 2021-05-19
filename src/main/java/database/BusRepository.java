@@ -1,11 +1,9 @@
 package database;
 
 import entity.Bus;
+import entity.Stop;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,12 @@ public class BusRepository {
             prepareStatement.setInt(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
 
-            resultSet.next();
+            boolean result = resultSet.next();
+
+            if(!result) {
+                return null;
+            }
+
             return Bus.create(resultSet);
 
         } catch (SQLException e) {
@@ -114,4 +117,45 @@ public class BusRepository {
 
         preparedStatement.close();
     }
+
+    public List<Bus> getBusesForStop(int stopId) {
+        List<Bus> busList = new ArrayList<>();
+        Connection connection = dbHandler.getConnection();
+        String query = "{call sp_buses_for_stop(?)}";
+
+        try {
+            CallableStatement call = connection.prepareCall(query);
+            call.setInt("stopId",stopId);
+
+            ResultSet resultSet = call.executeQuery();
+
+            while (resultSet.next()) {
+                busList.add(Bus.create(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return busList;
+    }
+
+    public List<Bus> getBusesForDriver(int driverId) {
+        List<Bus> busList = new ArrayList<>();
+        Connection connection = dbHandler.getConnection();
+        String query = "{call sp_drivers_for_bus(?)}";
+
+        try {
+            CallableStatement call = connection.prepareCall(query);
+            call.setInt("driverId",driverId);
+
+            ResultSet resultSet = call.executeQuery();
+
+            while (resultSet.next()) {
+                busList.add(Bus.create(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return busList;
+    }
+
 }

@@ -2,11 +2,9 @@ package database;
 
 import entity.Bus;
 import entity.Driver;
+import entity.Stop;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +87,25 @@ public class DriverRepository {
         preparedStatement.execute();
 
         preparedStatement.close();
+    }
+
+    public List<Driver> getDriversForBus(int busNumber) {
+        List<Driver> driversList = new ArrayList<>();
+        Connection connection = dbHandler.getConnection();
+        String query = "{call sp_drivers_for_bus(?)}";
+
+        try {
+            CallableStatement call = connection.prepareCall(query);
+            call.setInt("busNumber",busNumber);
+
+            ResultSet resultSet = call.executeQuery();
+
+            while (resultSet.next()) {
+                driversList.add(Driver.create(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return driversList;
     }
 }

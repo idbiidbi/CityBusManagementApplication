@@ -73,4 +73,7 @@ public class Bus {
     public String toString() {
         return getId() + ". Bus Number: " + getBusNumber() + ", Route: " + route();
     }
+    public String getInfo(){
+        return "Bus Number: " + busNumber + ", Route: " + route();
+    }
 }

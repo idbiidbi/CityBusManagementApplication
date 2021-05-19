@@ -10,6 +10,7 @@ import entity.Stop;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class BusTerminal {
 
     BusRepository busRepository = new BusRepository();
@@ -79,7 +80,7 @@ public class BusTerminal {
         return busRepository.getById(id);
     }
 
-    private Bus getBusByNumber(int busNumber) {
+    public Bus getBusByNumber(int busNumber) {
         return busRepository.getByNumber(busNumber);
     }
 
@@ -192,5 +193,21 @@ public class BusTerminal {
     public Stop getStopById(int id) {
         return stopRepository.getById(id);
     }
+
+
+    public List<Stop> getAllStopsForBus(int busId) {
+        return stopRepository.getRouteForBus(busId);
+    }
+
+    public List<Bus> getAllBusesForStop(int stopId){
+        return busRepository.getBusesForStop(stopId);
+    }
+
+    public List<Driver> getAllDriversInBus(int busId){
+        return driverRepository.getDriversForBus(busId);
+    }
+
+
+
 }
 

@@ -41,7 +41,11 @@ public class Stop {
 
     @Override
     public String toString() {
-        return id + ". Bus Stop: " + busStopName;
+        return "Bus Stop " + id + ": " + busStopName;
+    }
+
+    public String getInfo(){
+        return "Bus Stop " + id + ": " + busStopName;
     }
 }
 

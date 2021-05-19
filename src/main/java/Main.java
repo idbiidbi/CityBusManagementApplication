@@ -17,7 +17,7 @@ public class Main {
         main.signIn();
     }
 
-    void signIn() {
+    public void signIn() {
         String userInput;
 
         do {
@@ -33,7 +33,7 @@ public class Main {
 
             switch (userInput) {
                 case "1":
-                    var result = signInAsAdmin();
+                    boolean result = signInAsAdmin();
                     if (!result) {
                         return;
                     }

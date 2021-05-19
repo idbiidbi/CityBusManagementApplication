@@ -1,8 +1,10 @@
 package menu;
+
 import controller.BusTerminal;
 import entity.Bus;
 import entity.Driver;
 import entity.Stop;
+
 
 import java.util.Scanner;
 
@@ -10,16 +12,19 @@ public class AdminMenu {
 
     Scanner input = new Scanner(System.in);
     BusTerminal busTerminal = new BusTerminal();
+    UserMenu userMenu =new UserMenu();
+
 
     public Boolean showBusAdminMenu() {
 
         String userInput;
         do {
-            System.out.println("\n1. Add Bus \t\t\t\t5. Add Driver \t\t\t\t9. Add Bus Stop"
-                    + "\n2. Update Bus  \t\t\t6. Update Driver \t\t\t10. Update Bus Stop"
-                    + "\n3. Remove Bus \t\t\t7. Remove Driver \t\t\t11. Remove Bus Stop"
-                    + "\n4. View All Buses \t\t8. View All Drivers \t\t12. View All Bus Stops"
-                    + "\nEnter E to Exit");
+            System.out.println("\n1. Add Bus \t\t\t\t5. Add Driver \t\t\t\t10. Add Bus Stop"
+                    + "\n2. Update Bus  \t\t\t6. Update Driver \t\t\t11. Update Bus Stop"
+                    + "\n3. Remove Bus \t\t\t7. Remove Driver \t\t\t12. Remove Bus Stop"
+                    + "\n4. View All Buses \t\t8. View All Drivers \t\t13. View All Bus Stops"
+                    + "\n\t\t\t\t\t\t9. View Driver in Bus\n"
+                    + "\nEnter E to Exit\t\t\tEnter B to Back Main Menu\t Enter U to User Menu");
 
             System.out.println();
             System.out.print("Enter your choice: ");
@@ -52,16 +57,26 @@ public class AdminMenu {
                     viewAllDrivers();
                     break;
                 case "9":
-                    addBusStop();
+                    //viewDriverInBus();
+                    viewAllDriversInBus();
                     break;
                 case "10":
-                    updateBusStop();
+                    addBusStop();
                     break;
                 case "11":
-                    removeBusStop();
+                    updateBusStop();
                     break;
                 case "12":
+                    removeBusStop();
+                    break;
+                case "13":
                     viewAllBusStops();
+                    break;
+                case "B":
+                    backMainMenu();
+                    break;
+                case "U":
+                    goToUserMenu();
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
@@ -72,6 +87,13 @@ public class AdminMenu {
         } while (!userInput.equalsIgnoreCase("E"));
 
         return true;
+    }
+
+    void backMainMenu(){
+
+    }
+    void goToUserMenu(){
+        userMenu.showUserMenu();
     }
 
     void addBus(){
@@ -102,10 +124,10 @@ public class AdminMenu {
 
         Bus bus = busTerminal.getBusById(id);
 
-        System.out.print("Update bus new first stop: ");
+        System.out.print("Update bus number "+ bus.getBusNumber() +" first stop: ");
         bus.setFirstStop(input.nextLine());
 
-        System.out.print("Update bus new last stop: ");
+        System.out.print("Update bus number "+ bus.getBusNumber() +" last stop: ");
         bus.setLastStop(input.nextLine());
 
         System.out.println(busTerminal.updateBus(bus));
@@ -119,7 +141,7 @@ public class AdminMenu {
         System.out.print("Enter bus id: ");
         int id = Integer.parseInt(input.nextLine());
 
-        Bus bus = busTerminal.getBusById(id);
+        //Bus bus = busTerminal.getBusById(id);
         System.out.println(busTerminal.deleteBus(id));
 
     }
@@ -158,7 +180,7 @@ public class AdminMenu {
 
         Driver driver = busTerminal.getDriverById(id);
 
-        System.out.print("Update driver new name: ");
+        System.out.print("Update driver name: ");
         driver.setName(input.nextLine());
 
         System.out.print("Update driver last name: ");
@@ -175,7 +197,7 @@ public class AdminMenu {
         System.out.print("Enter driver id: ");
         int id = Integer.parseInt(input.nextLine());
 
-        Driver driver = busTerminal.getDriverById(id);
+        //Driver driver = busTerminal.getDriverById(id);
         System.out.println(busTerminal.deleteDriver(id));
 
     }
@@ -187,6 +209,23 @@ public class AdminMenu {
             System.out.println(driver);
         }
     }
+
+
+    void viewAllDriversInBus(){
+
+        System.out.print("Enter bus number: ");
+        int busNumber = Integer.parseInt(input.nextLine());
+
+        Bus bus = busTerminal.getBusByNumber(busNumber);
+
+        System.out.println("\nBus number " + busNumber + " cen be driven by the following drivers: ");
+        int counter = 1;
+        for (Driver driver: busTerminal.getAllDriversInBus(bus.getBusNumber())) {
+            System.out.println(counter + " driver: " + driver.getInfo());
+            counter++;
+        }
+    }
+
 
 
     void addBusStop(){
@@ -224,7 +263,7 @@ public class AdminMenu {
         System.out.print("Enter stop id: ");
         int id = Integer.parseInt(input.nextLine());
 
-        Stop stop = busTerminal.getStopById(id);
+        //Stop stop = busTerminal.getStopById(id);
         System.out.println(busTerminal.deleteStop(id));
 
     }
@@ -233,7 +272,7 @@ public class AdminMenu {
         System.out.println("\nSTOPS LIST");
 
         for (var stop: busTerminal.getStopsList()) {
-            System.out.println(stop);
+            System.out.println(stop.getInfo());
         }
     }
 }

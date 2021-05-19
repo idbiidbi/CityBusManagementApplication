@@ -2,10 +2,7 @@ package database;
 
 import entity.Stop;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,4 +84,25 @@ public class StopRepository {
 
         preparedStatement.close();
     }
+
+    public List<Stop> getRouteForBus(int busNumber) {
+        List<Stop> stopsList = new ArrayList<>();
+        Connection connection = dbHandler.getConnection();
+        String query = "{call sp_stops_for_bus(?)}";
+
+        try {
+            CallableStatement call = connection.prepareCall(query);
+            call.setInt("busNumber",busNumber);
+
+            ResultSet resultSet = call.executeQuery();
+
+            while (resultSet.next()) {
+                stopsList.add(Stop.create(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stopsList;
+    }
+
 }
