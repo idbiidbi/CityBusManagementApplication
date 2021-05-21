@@ -30,11 +30,11 @@ public class BusTerminal {
         }
 
         if(bus.getFirstStop().isBlank()) {
-            return "ERROR: The name of the stop can't be empty";
+            return "ERROR: The name of the route first name can't be empty";
         }
 
         if(bus.getLastStop().isBlank()) {
-            return "ERROR: The name of the stop can't be empty";
+            return "ERROR: The name of the route last name can't be empty";
         }
 
         try{
@@ -49,11 +49,11 @@ public class BusTerminal {
     public String updateBus(Bus bus) {
 
         if(bus.getFirstStop().isBlank()) {
-            return "ERROR: The name of the stop can't be empty";
+            return "ERROR: The name of the route first name can't be empty";
         }
 
         if(bus.getLastStop().isBlank()) {
-            return "ERROR: The name of the stop can't be empty";
+            return "ERROR: The name of the route last name can't be empty";
         }
 
         try{
@@ -185,9 +185,9 @@ public class BusTerminal {
             stopRepository.delete(id);
         }catch (SQLException e){
             e.printStackTrace();
-            return "error with deleting stop";
+            return "error with deleting bus stop";
         }
-        return "Stop deleting successfully";
+        return "Bus stop deleting successfully";
     }
 
     public Stop getStopById(int id) {

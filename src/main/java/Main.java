@@ -1,7 +1,9 @@
 import entity.Admin;
 import menu.AdminMenu;
 import menu.UserMenu;
+import ui.MainForm;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -11,9 +13,14 @@ public class Main {
     Admin admin = new Admin();
     UserMenu userMenu = new UserMenu();
 
-    public static void main(String[] args) {
+//    MainForm mainForm;
 
+    public static void main(String[] args) {
         Main main = new Main();
+
+//          main.mainForm = new MainForm();
+//          main.mainForm.showForm();
+
         main.signIn();
     }
 
@@ -37,8 +44,12 @@ public class Main {
                     if (!result) {
                         return;
                     }
+                    break;
                 case "2":
-                    signInAsUser();
+                    boolean result1 = signInAsUser();
+                    if (!result1) {
+                        return;
+                    }
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
@@ -63,9 +74,7 @@ public class Main {
                     System.out.println("\nWelcome " + adminEnter + "!!!");
                     var result = adminMenu.showBusAdminMenu();
 
-                    if (!result) {
-                        return false;
-                    }
+                    return result;
                 }
                 System.out.println("Incorrect password, please try again.");
                 continue;
@@ -75,8 +84,13 @@ public class Main {
         } while (true);
     }
 
-    void signInAsUser(){
-        userMenu.showUserMenu();
+    Boolean signInAsUser() {
+        boolean result = userMenu.showUserMenu();
+        if (!result) {
+            return false;
+        }
+
+        return true;
     }
 }
 

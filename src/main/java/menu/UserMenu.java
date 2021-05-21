@@ -11,7 +11,7 @@ public class UserMenu {
     BusTerminal busTerminal = new BusTerminal();
 
 
-    public void showUserMenu() {
+    public boolean showUserMenu() {
         System.out.println("\nWELCOME TO THE USER MENU!");
 
         String userInput;
@@ -42,12 +42,12 @@ public class UserMenu {
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
-
+                    return false;
                 default:
                     break;
             }
         } while (!userInput.equalsIgnoreCase("E"));
-
+        return true;
     }
 
     void viewAllBuses() {
@@ -67,12 +67,24 @@ public class UserMenu {
     }
 
     void viewAllBusesAtSpecificBusStop() {
-        System.out.println("Which bus stop do you want to check for bus availability?");
-        viewAllBusStops();
-        System.out.print("Enter bus stop number: ");
-        int id = Integer.parseInt(input.nextLine());
 
-        Stop stop = busTerminal.getStopById(id);
+        viewAllBusStops();
+
+        int id;
+        Stop stop;
+
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter bus stop number: ");
+
+            stop = busTerminal.getStopById(id);
+
+            if(stop == null) {
+                System.out.println("Invalid bus stop number");
+                continue;
+            }
+
+            break;
+        }
 
         System.out.println("\nThe following buses stop at the bus stop " + stop.getBusStopName() + ":");
 
@@ -84,44 +96,29 @@ public class UserMenu {
     void viewAllStopsForSpecificBus() {
         viewAllBuses();
 
-        System.out.print("Enter bus number: ");
-        int busNumber = Integer.parseInt(input.nextLine());
+        int busNumber;
+        Bus bus;
 
-        Bus bus = busTerminal.getBusByNumber(busNumber);
+        while(true) {
+            busNumber = MenuInputValidator.checkIfNumberEntered("Enter bus number: ");
+
+            bus = busTerminal.getBusByNumber(busNumber);
+
+            if(bus == null) {
+                System.out.println("Invalid bus number");
+                continue;
+            }
+
+            break;
+        }
 
         System.out.println("\nBus number " + busNumber + " stops at the following bus stops: " +
-                "\nFirst stop: " + bus.getFirstStop());
+                "\nRoute: " + bus.route());
 
-        int counter = 2;
+        int counter = 1;
         for (Stop stop: busTerminal.getAllStopsForBus(bus.getBusNumber())) {
             System.out.println(counter + " bus stop: " + stop.getBusStopName());
             counter++;
         }
-
-        System.out.println("Last stop: " + bus.getLastStop());
-
     }
-
-//    do {
-//        System.out.print("Please enter your name: ");
-//        String adminEnter = input.nextLine().toUpperCase();
-//
-//        while (!adminEnter.isBlank() && adminEnter.equals(admin.getName())) {
-//            System.out.print("Please enter your password: ");
-//            String adminPassword = input.nextLine();
-//
-//            while (!adminPassword.isBlank() && adminPassword.equals(admin.getPassword())) {
-//                System.out.println("\nWelcome " + adminEnter + "!!!");
-//                var result = adminMenu.showBusAdminMenu();
-//
-//                if (!result) {
-//                    return false;
-//                }
-//            }
-//            System.out.println("Incorrect password, please try again.");
-//            continue;
-//        }
-//        System.out.println("Incorrect name, please try again.");
-//        continue;
-//    } while (true);
 }

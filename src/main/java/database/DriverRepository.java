@@ -52,7 +52,12 @@ public class DriverRepository {
             prepareStatement.setInt(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
 
-            resultSet.next();
+            boolean result = resultSet.next();
+
+            if(!result) {
+                return null;
+            }
+
             return Driver.create(resultSet);
 
         } catch (SQLException e) {

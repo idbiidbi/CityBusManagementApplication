@@ -14,7 +14,6 @@ public class AdminMenu {
     BusTerminal busTerminal = new BusTerminal();
     UserMenu userMenu =new UserMenu();
 
-
     public Boolean showBusAdminMenu() {
 
         String userInput;
@@ -57,7 +56,6 @@ public class AdminMenu {
                     viewAllDrivers();
                     break;
                 case "9":
-                    //viewDriverInBus();
                     viewAllDriversInBus();
                     break;
                 case "10":
@@ -73,10 +71,12 @@ public class AdminMenu {
                     viewAllBusStops();
                     break;
                 case "B":
-                    backMainMenu();
-                    break;
+                    return true;
                 case "U":
-                    goToUserMenu();
+                    boolean result = goToUserMenu();
+                    if(!result) {
+                        return false;
+                    }
                     break;
                 case "E":
                     System.out.println("See you later, come again!");
@@ -89,11 +89,8 @@ public class AdminMenu {
         return true;
     }
 
-    void backMainMenu(){
-
-    }
-    void goToUserMenu(){
-        userMenu.showUserMenu();
+    boolean goToUserMenu(){
+        return  userMenu.showUserMenu();
     }
 
     void addBus(){
@@ -102,13 +99,14 @@ public class AdminMenu {
 
         System.out.println("\nCREATE A NEW BUS");
 
-        System.out.print("Enter bus number: ");
-        newBus.setBusNumber(Integer.parseInt(input.nextLine()));
+        int number = MenuInputValidator.checkIfNumberEntered("Enter bus number: ");
 
-        System.out.print("Enter bus first stop: ");
+        newBus.setBusNumber(number);
+
+        System.out.print("Enter bus route first name: ");
         newBus.setFirstStop(input.nextLine());
 
-        System.out.print("Enter bus last stop: ");
+        System.out.print("Enter bus route last name: ");
         newBus.setLastStop(input.nextLine());
 
         System.out.println(busTerminal.addBus(newBus));
@@ -119,15 +117,26 @@ public class AdminMenu {
 
         System.out.println("\nUPDATE BUS");
 
-        System.out.print("Enter bus id: ");
-        int id = Integer.parseInt(input.nextLine());
+        int id;
+        Bus bus;
 
-        Bus bus = busTerminal.getBusById(id);
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid bus ID: ");
 
-        System.out.print("Update bus number "+ bus.getBusNumber() +" first stop: ");
+            bus = busTerminal.getBusById(id);
+
+            if(bus == null) {
+                System.out.println("Invalid bus ID");
+                continue;
+            }
+
+            break;
+        }
+
+        System.out.print("Update bus number "+ bus.getBusNumber() +" route first name: ");
         bus.setFirstStop(input.nextLine());
 
-        System.out.print("Update bus number "+ bus.getBusNumber() +" last stop: ");
+        System.out.print("Update bus number "+ bus.getBusNumber() +" route last name: ");
         bus.setLastStop(input.nextLine());
 
         System.out.println(busTerminal.updateBus(bus));
@@ -138,10 +147,23 @@ public class AdminMenu {
         this.viewAllBuses();
 
         System.out.println("\nDELETE BUS");
-        System.out.print("Enter bus id: ");
-        int id = Integer.parseInt(input.nextLine());
 
-        //Bus bus = busTerminal.getBusById(id);
+        int id;
+        Bus bus;
+
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid bus ID: ");
+
+            bus = busTerminal.getBusById(id);
+
+            if(bus == null) {
+                System.out.println("Invalid bus ID");
+                continue;
+            }
+
+            break;
+        }
+
         System.out.println(busTerminal.deleteBus(id));
 
     }
@@ -175,10 +197,21 @@ public class AdminMenu {
 
         System.out.println("\nUPDATE DRIVER");
 
-        System.out.print("Enter driver id: ");
-        int id = Integer.parseInt(input.nextLine());
+        int id;
+        Driver driver;
 
-        Driver driver = busTerminal.getDriverById(id);
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid driver id: ");
+
+            driver = busTerminal.getDriverById(id);
+
+            if(driver == null) {
+                System.out.println("Invalid driver ID");
+                continue;
+            }
+
+            break;
+        }
 
         System.out.print("Update driver name: ");
         driver.setName(input.nextLine());
@@ -194,10 +227,23 @@ public class AdminMenu {
         this.viewAllDrivers();
 
         System.out.println("\nDELETE DRIVER");
-        System.out.print("Enter driver id: ");
-        int id = Integer.parseInt(input.nextLine());
 
-        //Driver driver = busTerminal.getDriverById(id);
+        int id;
+        Driver driver;
+
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid driver ID: ");
+
+            driver = busTerminal.getDriverById(id);
+
+            if(driver == null) {
+                System.out.println("Invalid driver ID");
+                continue;
+            }
+
+            break;
+        }
+
         System.out.println(busTerminal.deleteDriver(id));
 
     }
@@ -210,13 +256,24 @@ public class AdminMenu {
         }
     }
 
-
     void viewAllDriversInBus(){
+        this.viewAllBuses();
 
-        System.out.print("Enter bus number: ");
-        int busNumber = Integer.parseInt(input.nextLine());
+        int busNumber;
+        Bus bus;
 
-        Bus bus = busTerminal.getBusByNumber(busNumber);
+        while(true) {
+            busNumber = MenuInputValidator.checkIfNumberEntered("Enter valid bus number: ");
+
+            bus = busTerminal.getBusByNumber(busNumber);
+
+            if(bus == null) {
+                System.out.println("Invalid bus number");
+                continue;
+            }
+
+            break;
+        }
 
         System.out.println("\nBus number " + busNumber + " cen be driven by the following drivers: ");
         int counter = 1;
@@ -227,12 +284,11 @@ public class AdminMenu {
     }
 
 
-
     void addBusStop(){
 
         Stop newStop = new Stop();
 
-        System.out.println("\nCREATE A NEW STOP");
+        System.out.println("\nCREATE A NEW BUS STOP");
 
         System.out.print("Enter stop name: ");
         newStop.setBusStopName(input.nextLine());
@@ -243,14 +299,25 @@ public class AdminMenu {
     void updateBusStop(){
         this.viewAllBusStops();
 
-        System.out.println("\nUPDATE STOP");
+        System.out.println("\nUPDATE BUS STOP");
 
-        System.out.print("Enter stop id: ");
-        int id = Integer.parseInt(input.nextLine());
+        int id;
+        Stop stop;
 
-        Stop stop = busTerminal.getStopById(id);
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid bus stop ID: ");
 
-        System.out.print("Update stop new name: ");
+            stop = busTerminal.getStopById(id);
+
+            if(stop == null) {
+                System.out.println("Invalid bus stop ID");
+                continue;
+            }
+
+            break;
+        }
+
+        System.out.print("Update bus stop name: ");
         stop.setBusStopName(input.nextLine());
 
         System.out.println(busTerminal.updateStop(stop));
@@ -259,17 +326,29 @@ public class AdminMenu {
     void removeBusStop(){
         this.viewAllBusStops();
 
-        System.out.println("\nDELETE STOP");
-        System.out.print("Enter stop id: ");
-        int id = Integer.parseInt(input.nextLine());
+        System.out.println("\nDELETE BUS STOP");
 
-        //Stop stop = busTerminal.getStopById(id);
+        int id;
+        Stop stop;
+
+        while(true) {
+            id = MenuInputValidator.checkIfNumberEntered("Enter valid bus stop ID: ");
+
+            stop = busTerminal.getStopById(id);
+
+            if(stop == null) {
+                System.out.println("Invalid bus stop ID");
+                continue;
+            }
+            break;
+        }
+
         System.out.println(busTerminal.deleteStop(id));
 
     }
 
     void viewAllBusStops() {
-        System.out.println("\nSTOPS LIST");
+        System.out.println("\nBUS STOPS LIST");
 
         for (var stop: busTerminal.getStopsList()) {
             System.out.println(stop.getInfo());
