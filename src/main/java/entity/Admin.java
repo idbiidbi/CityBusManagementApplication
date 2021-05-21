@@ -9,7 +9,7 @@ public class Admin {
     }
 
     public String getName() {
-        name = "A";
+        name = "ADMIN";
         return name;
     }
 

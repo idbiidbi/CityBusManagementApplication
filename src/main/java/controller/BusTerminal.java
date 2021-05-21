@@ -207,7 +207,5 @@ public class BusTerminal {
         return driverRepository.getDriversForBus(busId);
     }
 
-
-
 }
 
